@@ -4,7 +4,7 @@ import pandas as pd
 # Konfigurasi halaman
 st.set_page_config(layout="wide", page_title="Tampilan Data Excel", page_icon="📄")
 
-st.title("📄 Tampilan Data Excel - Tubes_Mosi.xlsx (Sheet: DataTrain)")
+st.title("📄 Data Training")
 
 # Path file
 excel_path = r"D:\Tubes_Mosi\Tubes_Mosi.xlsx"  # gunakan raw string (r"...") agar backslash tidak error
