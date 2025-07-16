@@ -7,7 +7,7 @@ st.set_page_config(layout="wide", page_title="Tampilan Data Excel", page_icon="ð
 st.title("ðŸ“„ Data Training")
 
 # Path file
-excel_path = D:\\Tubes_Mosi\\Tubes_Mosi.xlsx
+excel_path = r"D:\Tubes_Mosi\Tubes_Mosi.xlsx" 
 
 # Fungsi untuk memuat data dari Excel
 @st.cache_data
