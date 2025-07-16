@@ -1,33 +1,26 @@
 import streamlit as st
 import pandas as pd
 
-# Konfigurasi halaman
-st.set_page_config(layout="wide", page_title="Tampilan Data Excel", page_icon="📄")
+st.set_page_config(page_title="Google Sheet Viewer", layout="wide")
 
-st.title("📄 Data Training")
+st.title("📄 Data dari Google Sheets - Sheet: DataTrain")
 
-# Path file
-path = r"Tubes_Mosi.xlsx"  
+# Ganti ini dengan URL CSV hasil publish
+csv_url = "https://docs.google.com/spreadsheets/d/e/2PACX-.../pub?output=csv"  # Ganti dengan yang kamu dapat
 
-# Fungsi untuk memuat data dari Excel
 @st.cache_data
-def load_excel_data(path):
+def load_data_from_google_sheet(url):
     try:
-        df = pd.read_excel(path, sheet_name="DataTrain")
+        df = pd.read_csv(url)
         return df
-    except FileNotFoundError:
-        st.error(f"❌ File tidak ditemukan di: {path}")
-        return pd.DataFrame()
-    except ValueError as e:
-        st.error(f"❌ Gagal membaca sheet: {e}")
+    except Exception as e:
+        st.error(f"Gagal memuat data: {e}")
         return pd.DataFrame()
 
-# Load data
-df = load_excel_data(path)
+df = load_data_from_google_sheet(csv_url)
 
-# Tampilkan data jika berhasil dimuat
 if not df.empty:
-    st.subheader("📊 Data dari Sheet 'DataTrain'")
+    st.subheader("📊 Data dari Google Sheet")
     st.dataframe(df)
 else:
-    st.warning("Tidak ada data yang bisa ditampilkan.")
+    st.warning("Data tidak tersedia.")
