@@ -23,7 +23,7 @@ def load_excel_data(path):
         return pd.DataFrame()
 
 # Load data
-df = load_excel_data(excel_path)
+df = load_excel_data(path)
 
 # Tampilkan data jika berhasil dimuat
 if not df.empty:
