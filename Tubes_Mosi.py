@@ -6,25 +6,28 @@ st.set_page_config(layout="wide", page_title="Tampilan Data Excel", page_icon="�
 
 st.title("📄 Tampilan Data Excel - Tubes_Mosi.xlsx (Sheet: DataTrain)")
 
-# Fungsi untuk memuat data dari file Excel lokal
+# Path file
+excel_path = r"D:\Tubes_Mosi\Tubes_Mosi.xlsx"  # gunakan raw string (r"...") agar backslash tidak error
+
+# Fungsi untuk memuat data dari Excel
 @st.cache_data
-def load_excel_data():
+def load_excel_data(path):
     try:
-        df = pd.read_excel("Tubes_Mosi.xlsx", sheet_name="DataTrain")
+        df = pd.read_excel(path, sheet_name="DataTrain")
         return df
     except FileNotFoundError:
-        st.error("❌ File 'Tubes_Mosi.xlsx' tidak ditemukan. Pastikan file berada di direktori yang sama.")
+        st.error(f"❌ File tidak ditemukan di: {path}")
         return pd.DataFrame()
     except ValueError as e:
         st.error(f"❌ Gagal membaca sheet: {e}")
         return pd.DataFrame()
 
 # Load data
-df = load_excel_data()
+df = load_excel_data(excel_path)
 
-# Tampilkan data jika tidak kosong
+# Tampilkan data jika berhasil dimuat
 if not df.empty:
     st.subheader("📊 Data dari Sheet 'DataTrain'")
     st.dataframe(df)
 else:
-    st.warning("Tidak ada data yang ditampilkan.")
+    st.warning("Tidak ada data yang bisa ditampilkan.")
