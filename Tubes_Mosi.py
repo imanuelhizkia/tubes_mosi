@@ -1,26 +1,34 @@
 import streamlit as st
 import pandas as pd
+import gdown
 
-st.set_page_config(page_title="Google Sheet Viewer", layout="wide")
+# Set halaman
+st.set_page_config(page_title="Data Excel dari Google Drive", layout="wide")
 
-st.title("📄 Data dari Google Sheets - Sheet: DataTrain")
+st.title("📄 Data Excel dari Google Drive (Sheet: DataTrain)")
 
-# Ganti ini dengan URL CSV hasil publish
-csv_url = "https://docs.google.com/spreadsheets/d/e/2PACX-.../pub?output=csv"  # Ganti dengan yang kamu dapat
+# ID File Google Sheets yang akan diunduh sebagai Excel (.xlsx)
+file_id = "1hDpXpEXw91e6BAsaMt6xrwe_pEVxJlfX"  # Ganti sesuai milikmu
+download_url = f"https://drive.google.com/uc?export=download&id={file_id}"
+local_filename = "Tubes_Mosi.xlsx"
 
+# Fungsi load data
 @st.cache_data
-def load_data_from_google_sheet(url):
+def load_excel_from_drive(url, filename):
     try:
-        df = pd.read_csv(url)
+        gdown.download(url, filename, quiet=False)
+        df = pd.read_excel(filename, sheet_name="DataTrain")
         return df
     except Exception as e:
-        st.error(f"Gagal memuat data: {e}")
+        st.error(f"❌ Gagal mengunduh atau membaca file: {e}")
         return pd.DataFrame()
 
-df = load_data_from_google_sheet(csv_url)
+# Load data
+df = load_excel_from_drive(download_url, local_filename)
 
+# Tampilkan
 if not df.empty:
-    st.subheader("📊 Data dari Google Sheet")
+    st.subheader("📊 Data dari Sheet 'DataTrain'")
     st.dataframe(df)
 else:
-    st.warning("Data tidak tersedia.")
+    st.warning("Tidak ada data yang ditampilkan.")
